@@ -9,6 +9,13 @@ const setUserReducer = (tokens = null, action) => {
   }
 };
 
+const setUserStatsReducer = (user = null, action) => {
+  if (action.type === 'SET_USER_STATS') {
+    return action.payload;
+  }
+  return user;
+};
+
 const setUserActivitiesReducer = (user = null, action) => {
   if (action.type === 'SET_USER_ACTIVITIES') {
     return action.payload;
@@ -16,7 +23,16 @@ const setUserActivitiesReducer = (user = null, action) => {
   return user;
 };
 
+const setUserRoutesReducer = (user = null, action) => {
+  if (action.type === 'SET_USER_ROUTES') {
+    return action.payload;
+  }
+  return user;
+};
+
 export default combineReducers({
   returnTokens: setUserReducer,
-  user: setUserActivitiesReducer,
+  userStats: setUserStatsReducer,
+  userActivities: setUserActivitiesReducer,
+  routes: setUserRoutesReducer,
 });

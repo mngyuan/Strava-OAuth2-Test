@@ -2,11 +2,18 @@ import React from 'react';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 
-import {setUser, setUserActivities} from '../actions';
+import {
+  setUser,
+  setUserStats,
+  setUserActivities,
+  setUserRoutes,
+} from '../actions';
 import {
   cleanUpAuthToken,
   testAuthGetter,
-  getUserData,
+  getUserStats,
+  getUserRoutes,
+  getUserActivities,
 } from '../utils/functions';
 
 class StravaRedirect extends React.Component {
@@ -29,8 +36,12 @@ class StravaRedirect extends React.Component {
         const userID = tokens.athlete.id;
 
         // Axios request to get users info
-        const user = await getUserData(userID, accessToken);
-        this.props.setUserActivities(user);
+        const user = await getUserStats(userID, accessToken);
+        this.props.setUserStats(user);
+        const routes = await getUserRoutes(userID, accessToken);
+        this.props.setUserRoutes(routes);
+        const activities = await getUserActivities(accessToken);
+        this.props.setUserActivities(activities);
 
         // Once complete, go to display page
         history.push('/yourdistance');
@@ -51,6 +62,8 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
+  setUserStats,
   setUserActivities,
   setUser,
+  setUserRoutes,
 })(StravaRedirect);
